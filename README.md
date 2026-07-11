@@ -58,20 +58,20 @@ The pipeline follows a three-layer Medallion architecture, renamed to keep the p
 ### 1. Data Warehouse Architecture
 The high-level system architecture illustrating how data moves from the raw Kaggle dataset, through the staging layers, and into the final analytical data warehouse.
 
-![DWH Architecture](images/DWH_Architecture.jpg)
+![DWH Architecture](Images/DWH_Architecture.jpg)
 
 ---
 
 ### 2. Data Flow Diagram (DFD)
 A detailed view showing the exact movement, transformation logic, and dependencies of the data as it travels between source files and target tables.
 
-![Data Flow Diagram](Data_Flow_Diagram.jpg)
+![Data Flow Diagram](Images/Data_Flow_Diagram.jpg)
 
 ---
 
 ### 3. DWH Layer Definition
 The structural breakdown of our data warehouse layers (Staging vs. Production), outlining the purpose, schema rules, and storage definitions for each stage.
 
-![DWH Layer Definition](images/DWH Layer Definition.jpg)
+![DWH Layer Definition](Images/DWH Layer Definition.jpg)
                                                        
 ---
