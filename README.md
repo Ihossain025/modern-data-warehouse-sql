@@ -140,3 +140,102 @@ item_allocated_payment = order_total_payment × (item_price ÷ order_total_price
 
 ---
 
+## Project Structure
+
+```
+A-Modern-Data-Warehouse/
+│
+├── Dataset                                                      # Store source CSV files (Olist dataset)
+│     
+├── Documentation                                                # Store all project documentation
+│     
+├── Images                                                       # Store screenshots or images related to the project
+│ 
+├── scripts/ 
+│   ├── Source_Layer/
+│   │   └── Source_Layer_DDL_And_Load.sql                        # Source Layer DDL and Load script
+│   │ 
+│   ├── Stage_Layer/
+│   │   └── Stage_Layer_DDL.sql                                  # Stage Layer DDL script
+│   │   └── Stage_Layer_CleanAndTransform.sql                    # Stage Layer ETL script
+│   │ 
+│   ├── Final_Layer/
+│   │   └── Final_Layer_DDL.sql                                  # Final Layer DDL script
+│   │   └── Final_Layer_CleanAndTransform.sql                    # Final Layer ETL script
+│   │                                                    
+│   ├── QualityCheck_or_Test/
+│       └── QualityCheck_in_Stage_Layer                          # Stage Layer Quality Check script
+│       └── QualityCheck_in_Final_Layer                          # Final Layer Quality Check script
+│
+├── README.md
+│
+```
+---
+
+## How to Run / Getting Started
+
+### Prerequisites
+
+- SQL Server (2019+)
+- SQL Server Management Studio (SSMS)
+- Olist E-commerce dataset (download from [Kaggle](https://www.kaggle.com/) or place under `Dataset/`)
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ihossain025/modern-data-warehouse-sql.git
+cd modern-data-warehouse-sql
+```
+
+### 2. Create the Database, Schemas, and Load Data into the Source Layer
+
+Run the setup script in SSMS to create the `Olist_DWH` database and Bronze layer tables:
+
+```sql
+-- Scripts/Source_Layer/Source_Layer_DDL_And_Load.sql 
+```
+
+### 3. Clean, Transform, and Load Source Layer Data into Stage Layer
+
+```sql
+Scripts/Stage_Layer/Stage_Layer_DDL.sql
+Scripts/Stage_Layer/Stage_Layer_CleanAndTransform.sql
+```
+
+### 4. Clean, Transform, and Load Stage Layer Data into Final Layer
+
+```sql
+Scripts/Final_Layer/Final_Layer_DDL.sql
+Scripts/Final_Layer/Final_Layer_CleanAndTransform.sql
+```
+
+### 5. Verify the Warehouse
+
+```sql
+SELECT TOP 100 * FROM Olist_DWH.Final_Layer.Fact_Order_Items;
+SELECT TOP 100 * FROM Olist_DWH.Final_Layer.Dim_Customers;
+```
+
+You're now ready to connect a BI tool of your choice to `Olist_DWH` and start building dashboards.
+
+---
+
+## Future Improvements
+
+- Implement incremental ETL loading
+- Add Slowly Changing Dimensions (SCD Type 2)
+- Automate pipeline scheduling
+- Integrate Power BI dashboards
+- Implement indexing and performance tuning
+- Containerize the solution using Docker
+
+---
+
+## 👤 Author
+
+**Md. Iqbal Hossain**
+
+Business & Data Analyst | Data Engineer | BI Enthusiast | Technical Consultant
+
+---
+
