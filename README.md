@@ -177,7 +177,7 @@ A-Modern-Data-Warehouse/
 ### Prerequisites
 
 - SQL Server (2019+)
-- SQL Server Management Studio (SSMS)
+- SQL Server Management Studio (SSMS) / Visual Studio Code
 - Olist E-commerce dataset (download from [Kaggle](https://www.kaggle.com/) or place under `Dataset/`)
 
 ### 1. Clone the Repository
@@ -188,8 +188,6 @@ cd modern-data-warehouse-sql
 ```
 
 ### 2. Create the Database, Schemas, and Load Data into the Source Layer
-
-Run the setup script in SSMS to create the `Olist_DWH` database and Bronze layer tables:
 
 ```sql
 -- Scripts/Source_Layer/Source_Layer_DDL_And_Load.sql 
@@ -235,7 +233,7 @@ You're now ready to connect a BI tool of your choice to `Olist_DWH` and start bu
 
 **Md. Iqbal Hossain**
 
-Business & Data Analyst | Data Engineer | BI Enthusiast | Technical Consultant
+Business & Data Analyst | Data Engineer | BI Analyst | Technical Consultant
 
 ---
 
