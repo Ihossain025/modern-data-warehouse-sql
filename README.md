@@ -54,19 +54,24 @@ The pipeline follows a three-layer Medallion architecture, renamed to keep the p
 | Silver | **Stage Layer** | Cleaned, standardized, type-corrected, per-table |
 | Gold | **Final Layer** | Integrated, dimensionally modeled (star schema) for reporting |
 
-```
-┌─────────────────┐      ┌──────────────────┐      ┌───────────────────┐
-│   SOURCE LAYER   │      │   STAGE LAYER     │      │   FINAL LAYER      │
-│  (raw, as-is)    │ ───► │ (cleaned, typed,  │ ───► │ (star schema,      │
-│  full batch load │      │  per-table)       │      │  dims + facts)     │
-└─────────────────┘      └──────────────────┘      └───────────────────┘
-     Kaggle CSVs           Data type fixes,           Dim_Date
-                            null handling,             Dim_Product
-                            deduplication,              Dim_Seller
-                            standardization              Dim_Customer
-                                                          Fact_Order_Items
-```
 
-See [`/images`](./images) for the full visual architecture diagram, data flow diagram, and table integration diagram.
+### 1. Data Warehouse Architecture
+The high-level system architecture illustrating how data moves from the raw Kaggle dataset, through the staging layers, and into the final analytical data warehouse.
 
+![DWH Architecture](images/DWH_Architecture.jpg)
+
+---
+
+### 2. Data Flow Diagram (DFD)
+A detailed view showing the exact movement, transformation logic, and dependencies of the data as it travels between source files and target tables.
+
+![Data Flow Diagram](Data_Flow_Diagram.jpg)
+
+---
+
+### 3. DWH Layer Definition
+The structural breakdown of our data warehouse layers (Staging vs. Production), outlining the purpose, schema rules, and storage definitions for each stage.
+
+![DWH Layer Definition](images/DWH Layer Definition.jpg)
+                                                       
 ---
