@@ -28,7 +28,7 @@ The pipeline follows a three-layer Medallion architecture, renamed to keep the p
 - Apply Kimball-style star schema modeling to a real, messy, multi-table dataset
 - Build in data quality checks at each layer rather than assuming clean data
 - Handle several common real-world challenges in data projects: clean up messy data, deduplication, granularity, etc.
-- - SQL development best practices
+- SQL development best practices
 
 ---
 
