@@ -67,7 +67,29 @@ A detailed data flow diagram indicating the exact flow of a data table between l
 
 ![Data Flow Diagram](Images/Data_Flow_Diagram.jpg)
 
+### ETL Process
+
+#### 1. Source Layer
+Raw CSV data is loaded directly into SQL Server tables that mirror the original dataset schema, with no cleaning applied. This preserves an unmodified reference point and supports re-processing if downstream logic needs revision.
+
+#### 2. Stage Layer
+Each source table is individually cleaned and transformed, including:
+- Data type correction
+- Null and blank value handling
+- Deduplication where applicable
+- Standardizing categorical values
+- Date validation
+
+Every staged table has a **dedicated quality-check script** that validates null rates, duplicate primary keys, and referential integrity before it's trusted for integration.
+
+#### 3. Final Layer
+Cleaned Stage tables are integrated and modeled into a **star schema**:
+- Four dimension tables (`Dim_Date`, `Dim_Product`, `Dim_Seller`, `Dim_Customer`) are loaded directly from their
+  corresponding stage tables.
+- One fact table (`Fact_Order_Items`) integrates four stage tables (`order_items`, `orders`, `order_payments`, `order_reviews`) into a single, business-ready table for analysis.
+
 ---
+
 ## Data Modeling (Kimball Star Schema)
 
 This warehouse is modeled using **Ralph Kimball's dimensional modeling methodology**, implemented as a **Star Schema** in the Final layer.
@@ -106,3 +128,15 @@ Payments are recorded per *order* in the source data, not per item. This column 
 item_allocated_payment = order_total_payment × (item_price ÷ order_total_price)
 ```                                                      
 ---
+
+## Tech Stack
+
+| Tool | Role in Project |
+|------|------------------|
+| **SQL Server** | Core data warehouse platform (`Olist_DWH`) hosting all Source/Stage/Final layers |
+| **T-SQL** | Data cleansing, transformation logic, and star schema build scripts |
+| **SQL Server Management Studio (SSMS)** | Primary IDE for database development, query testing, and administration |
+| **Python** | Messy Source data extraction and initial cleaning |
+
+---
+
