@@ -15,14 +15,6 @@
 
 Olist, a Brazilian e-commerce marketplace, generates transactional data spread across multiple disconnected CSV extracts — orders, customers, sellers, payments, and reviews — making cross-functional reporting slow and error-prone. This project builds a centralized **Data Warehouse (`Olist_DWH`)** on SQL Server that ingests, cleans, and models this raw data into a Kimball-style **Star Schema**. The result is a single source of truth that supports fast, scalable analytical queries for sales performance, customer behavior, and seller performance — ready to plug into any BI tool (Power BI, Tableau, etc.) without further transformation.
 
-The pipeline follows a three-layer Medallion architecture, renamed to keep the project's own terminology:
-
-| Medallion term | This project's term | Purpose |
-|---|---|---|
-| Bronze | **Source Layer** | Raw data, loaded as-is from source (full load, batch) |
-| Silver | **Stage Layer** | Cleaned, standardized, type-corrected, per-table |
-| Gold | **Final Layer** | Integrated, dimensionally modeled (star schema) for reporting |
-
 **Key goals of this project:**
 - Design a full-cycle DWH: ingestion → cleaning → dimensional modeling
 - Apply Kimball-style star schema modeling to a real, messy, multi-table dataset
@@ -49,3 +41,32 @@ The pipeline follows a three-layer Medallion architecture, renamed to keep the p
 ✔ Fact & Dimension Modeling
 
 ✔ Business-Ready Analytics Layer
+
+---
+
+## Architecture & Data Pipeline
+
+The pipeline follows a three-layer Medallion architecture, renamed to keep the project's own terminology:
+
+| Medallion term | This project's term | Purpose |
+|---|---|---|
+| Bronze | **Source Layer** | Raw data, loaded as-is from source (full load, batch) |
+| Silver | **Stage Layer** | Cleaned, standardized, type-corrected, per-table |
+| Gold | **Final Layer** | Integrated, dimensionally modeled (star schema) for reporting |
+
+```
+┌─────────────────┐      ┌──────────────────┐      ┌───────────────────┐
+│   SOURCE LAYER   │      │   STAGE LAYER     │      │   FINAL LAYER      │
+│  (raw, as-is)    │ ───► │ (cleaned, typed,  │ ───► │ (star schema,      │
+│  full batch load │      │  per-table)       │      │  dims + facts)     │
+└─────────────────┘      └──────────────────┘      └───────────────────┘
+     Kaggle CSVs           Data type fixes,           Dim_Date
+                            null handling,             Dim_Product
+                            deduplication,              Dim_Seller
+                            standardization              Dim_Customer
+                                                          Fact_Order_Items
+```
+
+See [`/images`](./images) for the full visual architecture diagram, data flow diagram, and table integration diagram.
+
+---
