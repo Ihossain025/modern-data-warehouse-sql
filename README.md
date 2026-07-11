@@ -72,6 +72,6 @@ A detailed view showing the exact movement, transformation logic, and dependenci
 ### 3. DWH Layer Definition
 The structural breakdown of our data warehouse layers (Staging vs. Production), outlining the purpose, schema rules, and storage definitions for each stage.
 
-![DWH Layer Definition](Images/DWH Layer Definition.jpg)
+![DWH Layer Definition](Images/DWH_Layer_Definition.jpg)
                                                        
 ---
