@@ -55,23 +55,54 @@ The pipeline follows a three-layer Medallion architecture, renamed to keep the p
 | Gold | **Final Layer** | Integrated, dimensionally modeled (star schema) for reporting |
 
 
-### 1. Data Warehouse Architecture
-The high-level system architecture illustrating how data moves from the raw Kaggle dataset, through the staging layers, and into the final analytical data warehouse.
+### Data Warehouse Architecture (DWH Arch)
+The high-level system architecture illustrates the key characteristics of each layer and how data moves between layers.
 
 ![DWH Architecture](Images/DWH_Architecture.jpg)
 
 ---
 
-### 2. Data Flow Diagram (DFD)
-A detailed view showing the exact movement, transformation logic, and dependencies of the data as it travels between source files and target tables.
+### Data Flow Diagram (DFD)
+A detailed data flow diagram indicating the exact flow of a data table between layers.
 
 ![Data Flow Diagram](Images/Data_Flow_Diagram.jpg)
 
 ---
+## Data Modeling (Kimball Star Schema)
 
-### 3. DWH Layer Definition
-The structural breakdown of our data warehouse layers (Staging vs. Production), outlining the purpose, schema rules, and storage definitions for each stage.
+This warehouse is modeled using **Ralph Kimball's dimensional modeling methodology**, implemented as a **Star Schema** in the Final layer.
 
-![DWH Layer Definition](Images/DWH_Layer_Definition.jpg)
-                                                       
+### Fact Tables
+
+- `Fact_Order_Items` — Order-item level transactional metrics (price, freight-value, payment_value_allocated)
+
+### Dimension Tables
+
+- `dim_customers` — Customer profile and location attributes
+- `dim_sellers` — Seller profile and location attributes
+- `dim_products` — Product category, dimensions, and attributes
+- `dim_date` — Standard calendar/date dimension for time-based analysis
+
+### Design Decisions
+
+- Adopted **surrogate keys** for all dimension tables to decouple the warehouse from source system keys
+- Applied **Type 1 SCD** for most dimensions (overwrite on change), given reporting needs prioritize current-state analysis.
+- The grain of the primary fact table is defined at the **order item level, not the order level**
+- Naming conventions follow `fact_*` and `dim_*` prefixes for immediate schema readability.
+
+#### Key decision points to remember
+
+**1. Fact table grain is order-item, not order.**
+Order-grain was considered as an alternative (it would make `payment_value` and `review_score` natively correct, with no allocation needed). It was rejected because `Dim_Product` and `Dim_Seller` require item-level grain — an order can span multiple products and sellers, and order-level grain would make product/seller-level analysis impossible without introducing a bridge table. Item-level grain was chosen to preserve this analytical capability.
+
+**2. `review_score_avg` in the fact table is an order-level measure repeated across item rows.**
+Olist records one review per *order*, not per item. This column carries the same value for every item in that order.
+Do not `SUM()` this column — it will overcount for multi-item orders; instead, use `AVG()`, or aggregate at the order level first.
+
+**3. `payment_value_allocated` in the fact table is an order-level measure proportionally allocated to items.**
+Payments are recorded per *order* in the source data, not per item. This column splits the order's total payment across its items, proportional to each item's share of the order's total price:
+
+```
+item_allocated_payment = order_total_payment × (item_price ÷ order_total_price)
+```                                                      
 ---
