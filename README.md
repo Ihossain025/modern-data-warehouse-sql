@@ -4,10 +4,10 @@
 
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
 ![T-SQL](https://img.shields.io/badge/T--SQL-025E8C?style=for-the-badge)
-![ETL](https://img.shields.io/badge/ETL-Pipeline-blue?style=for-the-badge)
-![Data Warehouse](https://img.shields.io/badge/Data-Warehouse-green?)
-![Star Schema](https://img.shields.io/badge/Star-Schema-orange?)
-![Kimball](https://img.shields.io/badge/Kimball-Dimensional_Model-purple?)
+![ETL](https://img.shields.io/badge/ETL_Pipeline-blue?style=for-the-badge)
+![Data Warehouse](https://img.shields.io/badge/Data_Warehouse-green?style=for-the-badge)
+![Star Schema](https://img.shields.io/badge/Star_Schema-orange?style=for-the-badge)
+![Kimball](https://img.shields.io/badge/Kimball_Dimensional_Model-purple?style=for-the-badge)
 
 ---
 
