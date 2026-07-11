@@ -13,30 +13,22 @@
 
 ## Project Overview
 
-This project demonstrates the design and implementation of a modern SQL Server data warehouse using the **Olist Brazilian E-Commerce** dataset.
+Olist, a Brazilian e-commerce marketplace, generates transactional data spread across multiple disconnected CSV extracts — orders, customers, sellers, payments, and reviews — making cross-functional reporting slow and error-prone. This project builds a centralized **Data Warehouse (`Olist_DWH`)** on SQL Server that ingests, cleans, and models this raw data into a Kimball-style **Star Schema**. The result is a single source of truth that supports fast, scalable analytical queries for sales performance, customer behavior, and seller performance — ready to plug into any BI tool (Power BI, Tableau, etc.) without further transformation.
 
-Starting from raw CSV files, the project builds an end-to-end ETL pipeline that cleans, validates, and transforms transactional data into a business-ready **Kimball Star Schema** for analytics and reporting.
+The pipeline follows a three-layer Medallion architecture, renamed to keep the project's own terminology:
 
-The solution follows a three-layer architecture consisting of:
+| Medallion term | This project's term | Purpose |
+|---|---|---|
+| Bronze | **Source Layer** | Raw data, loaded as-is from source (full load, batch) |
+| Silver | **Stage Layer** | Cleaned, standardized, type-corrected, per-table |
+| Gold | **Final Layer** | Integrated, dimensionally modeled (star schema) for reporting |
 
-| Medallion | Your Project |
-| --------- | ------------ |
-| Bronze    | Source Layer |
-| Silver    | Stage Layer  |
-| Gold      | Final Layer  |
-
-- **Source Layer** – Raw data ingestion
-- **Stage Layer** – Data cleansing, transformation, and quality validation
-- **Final Layer** – Dimensional model optimized for analytics
-
-Throughout the project, emphasis is placed on:
-
-- ETL pipeline design
-- Data quality validation
-- Dimensional modeling
-- Fact and dimension table design
-- Business-oriented data modeling
-- SQL development best practices
+**Key goals of this project:**
+- Design a full-cycle DWH: ingestion → cleaning → dimensional modeling
+- Apply Kimball-style star schema modeling to a real, messy, multi-table dataset
+- Build in data quality checks at each layer rather than assuming clean data
+- Handle several common real-world challenges in data projects: clean up messy data, deduplication, granularity, etc.
+- - SQL development best practices
 
 ---
 
